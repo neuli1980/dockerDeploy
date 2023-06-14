@@ -25,3 +25,9 @@ services:
     restart: always
     ports:
       - 8081:80
+  testalpine:
+    image: alpine
+    ports:
+      - 8022:22
+    links:
+      - nextcloud2
