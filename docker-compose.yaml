@@ -27,6 +27,7 @@ services:
       - 8081:80
   testalpine:
     image: alpine
+    restart: always
     ports:
       - 8022:22
     links:
