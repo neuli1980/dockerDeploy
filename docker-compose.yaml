@@ -12,8 +12,6 @@ services:
       - ./nginx/log/nginx/:/var/log/nginx/:rw
       - ./certbot/www/:/var/www/certbot/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
-    links:
-      - nextcloud2
   certbot:
     image: certbot/certbot:latest
     volumes:
@@ -27,6 +25,3 @@ services:
       - 8081:80
   testalpine:
     image: alpine
-    restart: always
-    links:
-      - nextcloud2
