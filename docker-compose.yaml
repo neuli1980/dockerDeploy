@@ -28,7 +28,5 @@ services:
   testalpine:
     image: alpine
     restart: always
-    ports:
-      - 8022:22
     links:
       - nextcloud2
