@@ -58,7 +58,7 @@ services:
     volumes:
       - npm-data:/data
 #      - ./certbot/conf/:/etc/letsencrypt:ro
-      - npm-db:/etc/letsencrypt
+      - npm-ssl:/etc/letsencrypt
     networks:
       - frontend
       - backend
