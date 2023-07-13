@@ -4,7 +4,7 @@ volumes:
   nextcloud-data:
   nextcloud-db:
   npm-data:
-#  npm-ssl:
+  npm-ssl:
   npm-db:
 
 networks:
@@ -57,8 +57,8 @@ services:
       - DB_MYSQL_NAME=npm
     volumes:
       - npm-data:/data
-      - ./certbot/conf/:/etc/letsencrypt:ro
-#      - npm-db:/etc/letsencrypt
+#      - ./certbot/conf/:/etc/letsencrypt:ro
+      - npm-db:/etc/letsencrypt
     networks:
       - frontend
       - backend
