@@ -20,27 +20,27 @@ services:
     restart: always
     volumes:
       - nextcloud-data:/var/www/html
-    environment:
-      - MYSQL_PASSWORD=mysupersecurePWD
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_HOST=nextcloud-db
+#    environment:
+#      - MYSQL_PASSWORD=mysupersecurePWD
+#      - MYSQL_DATABASE=nextcloud
+#      - MYSQL_USER=nextcloud
+#      - MYSQL_HOST=nextcloud-db
     networks:
       - frontend
       - backend
 
-  nextcloud-db:
-    image: mariadb
-    restart: always
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    volumes:
-      - nextcloud-db:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=mysupersecureROOTPWD
-      - MYSQL_PASSWORD=mysupersecurePWD
-      - MYSWL_USER=nextcloud
-    networks:
-      - backend
+#  nextcloud-db:
+#    image: mariadb
+#    restart: always
+#    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+#    volumes:
+#      - nextcloud-db:/var/lib/mysql
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=mysupersecureROOTPWD
+#      - MYSQL_PASSWORD=mysupersecurePWD
+#      - MYSWL_USER=nextcloud
+#    networks:
+#      - backend
 
   npm-app:
     image: jc21/nginx-proxy-manager:latest
