@@ -2,7 +2,7 @@ version: '3'
 
 volumes:
   nextcloud-data:
-  nextcloude-db:
+  nextcloud-db:
   npm-data:
   npm-ssl:
   npm-db:
