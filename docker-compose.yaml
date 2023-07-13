@@ -1,6 +1,80 @@
 version: '3'
 
+volumes:
+  nextcloud-data:
+  nextcloude-db:
+  npm-data:
+  npm-ssl:
+  npm-db:
+
+networks:
+  frontend:
+    # add this if the network is already existing!
+    # external: true
+  backend:
+
+
 services:
+  nextcloud-app:
+    image: nextcloud
+    restart: always
+    volumes:
+      - netcloud-data:/var/www/html
+    environment:
+      - MYSQL_PASSWORD=mysupersecurePWD
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_HOST=nextcloud-db
+    networks:
+      - frontend
+      - backend
+
+nextcloud-db:
+  image: mariadb
+  restart: always
+  command: --transaction-isolation=READ-COMMITED --binlog-format=ROW
+  volumes:
+    - nextcloud-db:/var/lib/mysql
+  environment:
+    -MYSQL_ROOT_PASSWORD=mysupersecureROOTPWD
+    -MYSQL_PASSWORD=mysupersecurePWD
+    -MYSWL_USER=nextcloud
+  networks:
+    - backend
+
+npm-app:
+  image: jc21/nginx-proxy-manager:latest
+  restart: always
+  ports:
+    - "80:80"
+    - "81:81"
+    - "443:443"
+  environment:
+    - DB_MYSQL_HOST=npm-db
+    - DB_MYSQL_PORT=3306
+    - DB_MYSQL_USER=npm
+    - DB_MYSQL_PASSWORD=superNPMPWD
+    - DB_MYSQL_NAME=npm
+  volumes:
+    - npm-data:/data
+    - npm-ssl:/etc/letsencrypt
+  networks:
+    - frontend
+    - backend
+
+npm-db:
+  image: jc21/mariadb-aria:latest
+  restart: always
+  environment:
+    - MYSQL_ROOT_PASSWORD=superNPMROOTPWD
+    - MYSQL_DATABASE=npm
+    - MYSQL_USER=npm
+    - MYSQL_PASSWORD=superNPMPWD
+  volumes:
+    - npm-db:/var/lib/mysql
+  networks:
+    - backend
+  
 #  reverse-proxy:
 #    # The official v2 Traefik docker image
 #    image: traefik:v2.10
@@ -14,27 +88,27 @@ services:
 #    volumes:
 #      # So that Traefik can listen to the Docker events
 #      - /var/run/docker.sock:/var/run/docker.sock
-  webserver:
-    image: nginx:latest
-    ports:
-      - 80:80
-      - 443:443
-    restart: always
-    volumes:
-      - ./nginx/conf/:/etc/nginx/conf.d/:ro
-      - ./nginx/log/nginx/:/var/log/nginx/:rw
-      - ./certbot/www/:/var/www/certbot/:ro
-      - ./certbot/conf/:/etc/nginx/ssl/:ro
+#  webserver:
+#    image: nginx:latest
+#    ports:
+#      - 80:80
+#      - 443:443
+#    restart: always
+#    volumes:
+#      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+#      - ./nginx/log/nginx/:/var/log/nginx/:rw
+#      - ./certbot/www/:/var/www/certbot/:ro
+#      - ./certbot/conf/:/etc/nginx/ssl/:ro
   certbot:
     image: certbot/certbot:latest
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
       - ./certbot/conf/:/etc/letsencrypt/:rw
       - ./certbot/log/:/var/log/:rw
-  nextcloud2:
-    image: nextcloud
-    restart: always
-    ports:
-      - 8081:80
+#  nextcloud2:
+#    image: nextcloud
+#    restart: always
+#    ports:
+#      - 8081:80
   testalpine:
     image: alpine
