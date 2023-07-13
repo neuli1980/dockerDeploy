@@ -29,51 +29,51 @@ services:
       - frontend
       - backend
 
-nextcloud-db:
-  image: mariadb
-  restart: always
-  command: --transaction-isolation=READ-COMMITED --binlog-format=ROW
-  volumes:
-    - nextcloud-db:/var/lib/mysql
-  environment:
-    -MYSQL_ROOT_PASSWORD=mysupersecureROOTPWD
-    -MYSQL_PASSWORD=mysupersecurePWD
-    -MYSWL_USER=nextcloud
-  networks:
-    - backend
+  nextcloud-db:
+    image: mariadb
+    restart: always
+    command: --transaction-isolation=READ-COMMITED --binlog-format=ROW
+    volumes:
+      - nextcloud-db:/var/lib/mysql
+    environment:
+      -MYSQL_ROOT_PASSWORD=mysupersecureROOTPWD
+      -MYSQL_PASSWORD=mysupersecurePWD
+      -MYSWL_USER=nextcloud
+    networks:
+      - backend
 
-npm-app:
-  image: jc21/nginx-proxy-manager:latest
-  restart: always
-  ports:
-    - "80:80"
-    - "81:81"
-    - "443:443"
-  environment:
-    - DB_MYSQL_HOST=npm-db
-    - DB_MYSQL_PORT=3306
-    - DB_MYSQL_USER=npm
-    - DB_MYSQL_PASSWORD=superNPMPWD
-    - DB_MYSQL_NAME=npm
-  volumes:
-    - npm-data:/data
-    - npm-ssl:/etc/letsencrypt
-  networks:
-    - frontend
-    - backend
+  npm-app:
+    image: jc21/nginx-proxy-manager:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    environment:
+      - DB_MYSQL_HOST=npm-db
+      - DB_MYSQL_PORT=3306
+      - DB_MYSQL_USER=npm
+      - DB_MYSQL_PASSWORD=superNPMPWD
+      - DB_MYSQL_NAME=npm
+    volumes:
+      - npm-data:/data
+      - npm-ssl:/etc/letsencrypt
+    networks:
+      - frontend
+      - backend
 
-npm-db:
-  image: jc21/mariadb-aria:latest
-  restart: always
-  environment:
-    - MYSQL_ROOT_PASSWORD=superNPMROOTPWD
-    - MYSQL_DATABASE=npm
-    - MYSQL_USER=npm
-    - MYSQL_PASSWORD=superNPMPWD
-  volumes:
-    - npm-db:/var/lib/mysql
-  networks:
-    - backend
+  npm-db:
+    image: jc21/mariadb-aria:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=superNPMROOTPWD
+      - MYSQL_DATABASE=npm
+      - MYSQL_USER=npm
+      - MYSQL_PASSWORD=superNPMPWD
+    volumes:
+      - npm-db:/var/lib/mysql
+    networks:
+      - backend
   
 #  reverse-proxy:
 #    # The official v2 Traefik docker image
