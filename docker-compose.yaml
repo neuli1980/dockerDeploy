@@ -36,9 +36,9 @@ services:
     volumes:
       - nextcloud-db:/var/lib/mysql
     environment:
-      -MYSQL_ROOT_PASSWORD=mysupersecureROOTPWD
-      -MYSQL_PASSWORD=mysupersecurePWD
-      -MYSWL_USER=nextcloud
+      - MYSQL_ROOT_PASSWORD=mysupersecureROOTPWD
+      - MYSQL_PASSWORD=mysupersecurePWD
+      - MYSWL_USER=nextcloud
     networks:
       - backend
 
