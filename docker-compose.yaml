@@ -59,7 +59,7 @@ services:
       - npm-data:/data
 #      - ./certbot/conf/:/etc/letsencrypt:ro
 #      - npm-ssl:/etc/letsencrypt
-       - ./certbot/conf/:/etc/letsencrypt
+      - ./certbot/conf/:/etc/letsencrypt
     networks:
       - frontend
       - backend
