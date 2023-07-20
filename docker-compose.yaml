@@ -6,6 +6,7 @@ volumes:
   npm-data:
   npm-ssl:
   npm-db:
+  portainer_data:
 
 networks:
   frontend:
@@ -82,6 +83,13 @@ services:
       - npm-db:/var/lib/mysql
     networks:
       - backend
+
+  portainer:
+    image: portainer/portainer-ce:alpine
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
 
   mailserver:
     image: docker.io/mailserver/docker-mailserver:latest
