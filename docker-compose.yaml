@@ -114,7 +114,7 @@ services:
     environment:
       - ENABLE_FAIL2BAN=1
       # Insofern letsencrypt für SSL/TLS-Zertifikate genutzt wird (andernfalls anzupassen)
-      - SSL_TYPE=letsencrypt
+      # - SSL_TYPE=letsencrypt
       - PERMIT_DOCKER=network
       - ONE_DIR=1
       - ENABLE_POSTGREY=0
