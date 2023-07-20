@@ -29,6 +29,12 @@ services:
       - frontend
       - backend
 
+  adminer:
+    image: adminer
+    networks:
+      - backend
+    ports:
+      - "8080:8080"
 #  nextcloud-db:
 #    image: mariadb
 #    restart: always
